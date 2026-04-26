@@ -254,3 +254,98 @@ main,
     border-radius: 20px;
   }
 }
+
+/* ==========================================
+   READABILITY ENHANCEMENTS
+   ========================================== */
+
+/* Highlighted text — use <mark> or .highlight class */
+mark, .highlight {
+  background: linear-gradient(120deg, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.1) 100%);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+}
+
+/* Inline code */
+.post-body code {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 4px;
+  padding: 0.15em 0.4em;
+  font-size: 0.88em;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #c4b5fd;
+}
+
+/* Block callout / key insight */
+.callout {
+  background: rgba(139, 92, 246, 0.08);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-size: 0.97rem;
+  color: #d1d5db;
+}
+
+/* Section divider in posts */
+.post-body hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin: 2rem 0;
+}
+
+/* Strong emphasis — bolder accent color */
+.post-body strong {
+  color: #e5e7eb;
+  font-weight: 700;
+}
+
+/* Better line height and font size for post body */
+.post-body p {
+  line-height: 1.85;
+  font-size: 1.02rem;
+  color: #d1d5db;
+  margin-bottom: 1.2rem;
+}
+
+/* Section headings with subtle underline */
+.post-body h2 {
+  color: #f3f4f6;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.post-body h3 {
+  color: #e5e7eb;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+/* List styling */
+.post-body ul, .post-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.post-body li {
+  line-height: 1.75;
+  margin-bottom: 0.4rem;
+  color: #d1d5db;
+}
+
+/* Key stat / number callout */
+.stat {
+  display: inline-block;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
