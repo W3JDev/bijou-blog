@@ -90,12 +90,21 @@ main,
   font-weight: 700;
 }
 
-.hero h1,
+.hero h1 {
+  margin: 0.6rem 0 1rem;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  line-height: 1.05;
+  max-width: 16ch;
+  letter-spacing: -0.02em;
+}
+
 .post-hero h1 {
   margin: 0.6rem 0 1rem;
-  font-size: clamp(2.7rem, 7vw, 5.2rem);
-  line-height: 0.96;
-  max-width: 12ch;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.2;
+  max-width: 26ch;
+  letter-spacing: -0.01em;
+  font-weight: 800;
 }
 
 .hero-copy,
@@ -104,8 +113,8 @@ main,
 .two-col p,
 .post-card p {
   color: var(--muted);
-  line-height: 1.75;
-  font-size: 1.05rem;
+  line-height: 1.8;
+  font-size: 1rem;
 }
 
 .hero-copy {
@@ -166,7 +175,8 @@ main,
 .section-head h2,
 .two-col h2 {
   margin: 0.2rem 0 0;
-  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+  letter-spacing: -0.01em;
 }
 
 .post-card {
@@ -176,7 +186,9 @@ main,
 
 .post-card h3 {
   margin: 0.4rem 0 0.75rem;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 
 .post-link {
@@ -273,8 +285,9 @@ main,
 
 .bijou-talk-inner h2 {
   margin: 0 0 0.6rem;
-  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
   color: var(--text);
+  letter-spacing: -0.01em;
 }
 
 .bijou-talk-inner p {
@@ -341,28 +354,29 @@ mark, .highlight {
 /* Better line height and font size for post body */
 .post-body p {
   line-height: 1.85;
-  font-size: 1.02rem;
-  color: #d1d5db;
-  margin-bottom: 1.2rem;
+  font-size: 0.97rem;
+  color: #c9d1e0;
+  margin-bottom: 1.1rem;
 }
 
 /* Section headings with subtle underline */
 .post-body h2 {
   color: #f3f4f6;
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 700;
   margin-top: 2.5rem;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.4rem;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.35rem;
   border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+  letter-spacing: -0.01em;
 }
 
 .post-body h3 {
   color: #e5e7eb;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  margin-top: 1.75rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.4rem;
 }
 
 /* List styling */
@@ -385,3 +399,57 @@ mark, .highlight {
   color: var(--accent);
   letter-spacing: -0.02em;
 }
+
+/* ==========================================
+   TYPOGRAPHY POLISH — hierarchy & readability
+   ========================================== */
+
+/* Post meta label — smaller, subtle */
+.post-meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+}
+
+/* Post article container — tighter reading width */
+.post-article {
+  max-width: 48rem;
+}
+
+/* Post body intro paragraph — slightly larger for reading comfort */
+.post-body > p:first-child {
+  font-size: 1.05rem;
+  color: #d8dde8;
+  line-height: 1.9;
+}
+
+/* Post card — better spacing */
+.post-card {
+  padding: 1.4rem 1.6rem;
+}
+
+/* Featured post card slight emphasis */
+.post-card.featured h3 {
+  font-size: 1.3rem;
+}
+
+/* Section head — proper breathing room */
+.section-head {
+  margin-bottom: 1.5rem;
+}
+
+/* Reading progress: subtle top bar on post pages */
+.post-shell .post-hero {
+  padding-bottom: 1.5rem;
+}
+
+/* Post back link — cleaner */
+.back-link {
+  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.back-link:hover { opacity: 1; }
