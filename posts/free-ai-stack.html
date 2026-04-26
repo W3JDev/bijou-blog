@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>I Run a 5-Agent AI Business on $0/Month. Here's the Stack. — Bijou</title>
+    <meta name="description" content="The exact model routing setup I use to run 5 AI agents continuously — zero paid API costs. OpenRouter, Gemini free tier, Nebius, and how I batch to stay within limits." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <main class="post-shell">
+      <a class="back-link" href="../index.html">← Back to home</a>
+
+      <section class="post-hero">
+        <div class="post-meta">April 19, 2026 · Ai</div>
+        <h1>I Run a 5-Agent AI Business on $0/Month. Here's the Stack.</h1>
+        <p class="post-subtitle">The exact model routing setup I use to run 5 AI agents continuously — zero paid API costs. OpenRouter, Gemini free tier, Nebius, and how I batch to stay within limits.</p>
+      </section>
+
+      <article class="post-article">
+        <div class="post-body">
+<p>Everyone assumes running AI agents costs money. Real money — API bills, compute, the kind of thing that makes a solo founder hesitate before spinning up another workflow.</p>
+
+<p>Mine cost nothing. Not "almost nothing." Zero. I run 5 agents continuously, handling content drafts, lead research, daily ops briefs, client follow-ups, and code reviews — all on free model tiers.</p>
+
+<p>Here's the exact stack.</p>
+
+<h2>The Model Routing Table</h2>
+
+<p>The key insight is that not every task needs the best model. Most tasks don't even need a good model. They need a consistent, fast, free one.</p>
+
+<p><strong>OpenRouter free tier</strong> — Background tasks. Lead scanning, data formatting, summarisation, simple classification. OpenRouter routes to models like Llama 3.3 70B and Gemma 3 12B for free. Rate limit: 20 requests per minute, 200 requests per day per model. Use for anything that doesn't need nuance.</p>
+
+<p><strong>Gemini 1.5 Flash (free tier)</strong> — Reasoning tasks. Anything requiring multi-step thinking, long context windows, or structured output. Google's free tier gives you 15 requests per minute and 1 million tokens per day. That's genuinely generous. I route all my complex agent reasoning here.</p>
+
+<p><strong>Nebius / Kimi K2.5 (OpenCode Go)</strong> — Complex coding and orchestration. When I need an agent to write production-quality code, architect a system, or handle a multi-tool workflow, this is the model. It's the most capable in the stack and handled via the OpenCode Go routing layer.</p>
+
+<p><strong>GLM-5</strong> — Content and creative writing. LinkedIn posts, blog drafts, email copy. Fast, coherent, free. Routes through the same OpenCode Go layer.</p>
+
+<p><strong>Minimax M2.5</strong> — The cheapest option in the stack. Cron jobs, file updates, log writing, mechanical operations that happen 50 times a day. This model costs nothing and handles volume without complaint.</p>
+
+<h2>Rate Limit Reality</h2>
+
+<p>Here's what actually breaks people: they think "free" means "unlimited." It doesn't. The limits are:</p>
+
+<ul>
+  <li>OpenRouter free models: 20 RPM, 200 requests/day per model</li>
+  <li>Gemini free tier: 15 RPM, 1M tokens/day</li>
+  <li>Nebius free allocation: generous but not infinite</li>
+</ul>
+
+<p>The solution isn't to panic. It's to batch.</p>
+
+<p>Instead of sending 10 individual classification requests per lead scan, I batch all 10 leads into a single prompt and parse the structured output. One API call, same result. This alone cuts OpenRouter usage by 80%.</p>
+
+<p>I also stagger agent runs. Not everything needs to run simultaneously. My morning brief agent fires at 7AM. The lead scanner runs at 9AM. Content drafts queue up at 11AM. The EOD summary hits at 6PM. Spread across the day, the rate limits become irrelevant.</p>
+
+<h2>A Full Daily Ops Cycle, Within Free Limits</h2>
+
+<p>Here's what a typical day looks like for the agent stack:</p>
+
+<p><strong>6AM — Morning brief (Gemini 1.5 Flash).</strong> One call to summarise overnight Telegram messages, flag anything urgent, and output a structured brief. ~3,000 tokens. Well within free tier.</p>
+
+<p><strong>9AM — Lead scan (OpenRouter/Llama).</strong> Batch 15-20 potential leads from Upwork, LinkedIn, and GitHub bounties into a single prompt. Classify intent, score relevance, output JSON. One API call, 200 tokens in, 800 tokens out.</p>
+
+<p><strong>11AM — Content draft (GLM-5).</strong> Take the best idea from the morning brief, write a full LinkedIn post draft. One call, ~600 tokens output. Human review before posting.</p>
+
+<p><strong>3PM — Client follow-up drafts (Gemini).</strong> Any pending client communications get drafted here. Batched into a single prompt grouped by client.</p>
+
+<p><strong>6PM — EOD summary (Minimax M2.5).</strong> Log what was completed, what's pending, what needs human action. Write to file. Done.</p>
+
+<p>Total API calls across 5 agents for a full operational day: under 30. Total daily cost: $0.</p>
+
+<h2>When I Do Pay</h2>
+
+<p>There's one situation where I open my wallet: when a client's production system needs guaranteed SLA.</p>
+
+<p>Free tiers have no uptime guarantees. If OpenRouter has a bad hour, my personal ops can wait. But if a client's WhatsApp automation is down during lunch service, that's a business problem. For production client deployments, I use paid tiers — usually Anthropic or OpenAI, billed to the project. The client pays for it as part of the engagement.</p>
+
+<p>My own ops? Never paid. The stack above handles everything I need.</p>
+
+<h2>What's Coming</h2>
+
+<p>I've been refining this routing setup for about 8 months. The full breakdown — exact n8n workflows, OpenClaw agent configs, rate limit tracking scripts, and the batching patterns — is going into a Gumroad guide.</p>
+
+<p><strong>"The Zero-Cost AI Ops Stack"</strong> — a practical guide for solo founders and small teams who want real agentic systems without the API bill. Targeting a May 2026 release.</p>
+
+<p>If you want to be notified when it drops, reply to this post or drop your email in the CTA below.</p>
+
+<p>And if you need this set up for your business now — not in guide form, actually configured and running — I do that too.</p>
+
+<p>→ <a href="mailto:jewel@w3j.dev">Talk to me</a></p>
+<div class="cta-box">
+  <p>Want this stack set up for your business?</p>
+  <p><a href="mailto:jewel@w3j.dev">Talk to me</a></p>
+</div>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>
