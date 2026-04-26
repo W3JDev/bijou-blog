@@ -721,3 +721,205 @@ mark, .highlight {
     width: 100%;
   }
 }
+
+
+/* ════════════════════════════════════════════════════════════
+   EDITORIAL REDESIGN — Post pages content-on-background
+   ════════════════════════════════════════════════════════════ */
+
+/* Post shell — more padding, editorial */
+.post-shell {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 6rem;
+}
+
+/* Post hero — CENTERED */
+.post-hero {
+  text-align: center;
+  padding: 3rem 0 2.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.post-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--text-primary, #f8f5ff);
+  margin: 0.6rem 0 1.25rem;
+  max-width: 100%;
+}
+
+.post-subtitle {
+  font-size: 1.1rem;
+  color: rgba(248,245,255,0.6);
+  line-height: 1.75;
+  max-width: 560px;
+  margin: 0 auto 1.5rem;
+}
+
+/* Post actions — center them */
+.post-actions {
+  justify-content: center;
+}
+
+/* Remove card styling from post article */
+.post-article {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* Post body prose */
+.post-body {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: rgba(248,245,255,0.82);
+}
+
+.post-body p {
+  margin-bottom: 1.4rem;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: rgba(248,245,255,0.82);
+}
+
+.post-body h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #f8f5ff;
+  margin-top: 3rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.015em;
+  border-bottom: 1px solid rgba(124,58,237,0.2);
+  padding-bottom: 0.4rem;
+}
+
+.post-body strong {
+  color: #f8f5ff;
+  font-weight: 700;
+}
+
+/* Back link — centered */
+.back-link {
+  display: block;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Author block */
+.post-author {
+  max-width: 680px;
+  margin: 3rem auto 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(124,58,237,0.15);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.post-author-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #22d3ee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.post-author-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #f8f5ff;
+}
+
+.post-author-handle {
+  font-size: 0.8rem;
+  color: rgba(248,245,255,0.5);
+}
+
+/* Post nav — centered, below author */
+.post-nav {
+  max-width: 680px;
+  margin: 2rem auto 0;
+}
+
+/* Atmospheric background glow — larger, softer */
+.bg-glow-1 {
+  width: 50rem;
+  height: 50rem;
+  opacity: 0.15;
+}
+
+.bg-glow-2 {
+  width: 45rem;
+  height: 45rem;
+  opacity: 0.12;
+}
+
+/* TOC rail — only on large screens */
+.post-layout {
+  display: block;
+}
+
+.toc-rail {
+  display: none;
+}
+
+/* CTA box — borderless, atmospheric */
+.cta-box {
+  background: rgba(124,58,237,0.08);
+  border: 1px solid rgba(124,58,237,0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 2.5rem 0;
+}
+
+/* Refined post cards */
+.post-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(124,58,237,0.15);
+  border-radius: 16px;
+  padding: 1.75rem;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  max-width: 100%;
+}
+
+.post-card:hover {
+  border-color: rgba(124,58,237,0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(124,58,237,0.15);
+}
+
+.posts-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+  padding-bottom: 4rem;
+}
+
+/* Background noise texture */
+body {
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
