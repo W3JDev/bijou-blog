@@ -1,25 +1,25 @@
 /**
- * Bijou Read Aloud — ElevenLabs TTS streaming
- * Voice: e72XruyIrGwdOgcQqzw1
+ * Bijou Read Aloud — Deepgram Aura TTS
+ * Voice: aura-asteria-en (warm, natural female)
+ * Provider: Deepgram v1/speak
  */
 (function () {
   'use strict';
 
-  const VOICE_ID = 'e72XruyIrGwdOgcQqzw1';
-  const API_KEY  = 'sk_dffe1f5bb61759fa62f6222037a01ced7cc9f4c939e71533';
-  const MAX_CHARS = 4800; // ElevenLabs turbo v2_5 safe limit
+  const DG_KEY   = 'b94de3a6d4dea130d6b39caab6af15424b6477cb';
+  const DG_MODEL = 'aura-asteria-en';
+  const MAX_CHARS = 5000;
 
-  let isPlaying      = false;
-  let stopRequested  = false;
-  let audioCtx       = null;
-  let activeSource   = null;
+  let isPlaying     = false;
+  let stopRequested = false;
+  let audioCtx      = null;
+  let activeSource  = null;
 
   /* ── Helpers ─────────────────────────────────────────────── */
 
   function getPostText() {
     const body = document.querySelector('.post-body');
     if (!body) return '';
-    // Clone to strip hidden elements, then get clean text
     const clone = body.cloneNode(true);
     clone.querySelectorAll('script, style, .bijou-lead-form').forEach(el => el.remove());
     return clone.innerText.replace(/\s+/g, ' ').trim().slice(0, MAX_CHARS);
@@ -53,25 +53,20 @@
   }
 
   async function streamAudio(text) {
-    const url = `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}/stream`;
+    const url = `https://api.deepgram.com/v1/speak?model=${DG_MODEL}`;
 
     const res = await fetch(url, {
       method: 'POST',
       headers: {
-        'xi-api-key':   API_KEY,
+        'Authorization': `Token ${DG_KEY}`,
         'Content-Type': 'application/json',
-        'Accept':       'audio/mpeg',
       },
-      body: JSON.stringify({
-        text,
-        model_id: 'eleven_turbo_v2_5',
-        voice_settings: { stability: 0.5, similarity_boost: 0.75 },
-      }),
+      body: JSON.stringify({ text }),
     });
 
     if (!res.ok) {
       const errText = await res.text().catch(() => res.status);
-      throw new Error(`ElevenLabs ${res.status}: ${errText}`);
+      throw new Error(`Deepgram ${res.status}: ${errText}`);
     }
 
     if (stopRequested) return;
@@ -122,6 +117,7 @@
       console.error('[ReadAloud]', err);
       isPlaying = false;
       setButtonState(btn, false);
+      alert('Read aloud failed: ' + err.message);
     }
   }
 
