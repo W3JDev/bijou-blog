@@ -923,3 +923,245 @@ body::before {
   z-index: 0;
   opacity: 0.4;
 }
+
+
+/* =============================================
+   RICH READING TYPOGRAPHY — Document feel
+   ============================================= */
+
+/* Links inside post body */
+.post-body a {
+  color: #a78bfa;
+  text-decoration: underline;
+  text-decoration-color: rgba(167,139,250,0.35);
+  text-underline-offset: 3px;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+.post-body a:hover {
+  color: #c4b5fd;
+  text-decoration-color: rgba(196,181,253,0.7);
+}
+
+/* Unordered lists */
+.post-body ul {
+  padding-left: 0;
+  margin: 1.25rem 0 1.5rem;
+  list-style: none;
+}
+.post-body ul li {
+  position: relative;
+  padding-left: 1.4rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.75;
+  color: rgba(248,245,255,0.8);
+  font-size: 1.02rem;
+}
+.post-body ul li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: #7c3aed;
+  font-size: 0.5rem;
+  top: 0.55em;
+}
+
+/* Ordered lists */
+.post-body ol {
+  padding-left: 1.5rem;
+  margin: 1.25rem 0 1.5rem;
+}
+.post-body ol li {
+  margin-bottom: 0.6rem;
+  line-height: 1.75;
+  color: rgba(248,245,255,0.8);
+  font-size: 1.02rem;
+  padding-left: 0.25rem;
+}
+
+/* Blockquote / pull quote */
+.post-body blockquote {
+  border-left: 3px solid #7c3aed;
+  margin: 2rem 0;
+  padding: 0.75rem 1.25rem;
+  background: rgba(124,58,237,0.07);
+  border-radius: 0 8px 8px 0;
+}
+.post-body blockquote p {
+  margin: 0;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: rgba(248,245,255,0.85);
+  line-height: 1.7;
+}
+
+/* Callout boxes */
+.callout {
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1.75rem 0;
+  font-size: 0.97rem;
+  line-height: 1.7;
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+.callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+.callout-body { flex: 1; }
+.callout-body strong { display: block; margin-bottom: 0.25rem; font-size: 0.9rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.callout.insight {
+  background: rgba(124,58,237,0.1);
+  border: 1px solid rgba(124,58,237,0.25);
+  color: rgba(248,245,255,0.85);
+}
+.callout.result {
+  background: rgba(34,197,94,0.07);
+  border: 1px solid rgba(34,197,94,0.2);
+  color: rgba(248,245,255,0.85);
+}
+.callout.tool {
+  background: rgba(34,211,238,0.07);
+  border: 1px solid rgba(34,211,238,0.2);
+  color: rgba(248,245,255,0.85);
+}
+
+/* Stat row — highlighted numbers */
+.stat-row {
+  display: flex;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+.stat-item {
+  flex: 1;
+  min-width: 120px;
+  background: rgba(124,58,237,0.08);
+  border: 1px solid rgba(124,58,237,0.18);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  text-align: center;
+}
+.stat-value {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #a78bfa;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.stat-label {
+  display: block;
+  font-size: 0.78rem;
+  color: rgba(248,245,255,0.5);
+  margin-top: 0.25rem;
+  letter-spacing: 0.05em;
+}
+
+/* Workflow step indicator */
+.step {
+  display: flex;
+  gap: 1rem;
+  margin: 1.25rem 0;
+  align-items: flex-start;
+}
+.step-num {
+  width: 1.75rem;
+  height: 1.75rem;
+  min-width: 1.75rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.15rem;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.4);
+}
+.step-body { flex: 1; }
+.step-title {
+  font-weight: 700;
+  color: #f8f5ff;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+.step-desc {
+  color: rgba(248,245,255,0.7);
+  font-size: 0.93rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Stack item / tool card */
+.stack-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+  align-items: flex-start;
+}
+.stack-label {
+  font-weight: 700;
+  color: #a78bfa;
+  font-size: 0.9rem;
+  min-width: 160px;
+  flex-shrink: 0;
+}
+.stack-desc {
+  color: rgba(248,245,255,0.72);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* Section divider */
+.post-body hr {
+  border: none;
+  border-top: 1px solid rgba(124,58,237,0.15);
+  margin: 2.5rem 0;
+}
+
+/* Inline highlight */
+.highlight {
+  background: rgba(124,58,237,0.18);
+  color: #c4b5fd;
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  font-size: 0.95em;
+}
+
+/* CTA box — refined */
+.cta-box {
+  background: rgba(124,58,237,0.08);
+  border: 1px solid rgba(124,58,237,0.25);
+  border-radius: 14px;
+  padding: 1.75rem;
+  margin: 3rem 0 1rem;
+  text-align: center;
+}
+.cta-box h3 {
+  color: #f8f5ff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+.cta-box p {
+  color: rgba(248,245,255,0.65);
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+}
+.cta-box a.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.4rem;
+  background: linear-gradient(90deg, #7c3aed, #a855f7);
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+.cta-box a.btn:hover { transform: translateY(-1px); }
