@@ -66,74 +66,139 @@
 
         <article class="post-article">
           <div class="post-body">
-<p>The average F&amp;B owner in Malaysia is running customer management on three WhatsApp groups, a paper notepad, and memory. That's not an exaggeration — I've seen it firsthand. And when a new customer messages in, the process is: reply manually, forget to follow up, lose them to a competitor who responded faster.</p>
+<p>The average F&amp;B owner in Malaysia is running customer management on three WhatsApp groups, a paper notepad, and memory. That's not an exaggeration — I've seen it firsthand. When a new customer messages in, the process is: reply manually, forget to follow up, lose them to a competitor who responded faster.</p>
 
-<p>There's no CRM. There's no system. There's just chaos that looks organised until it isn't.</p>
+<p>There's no CRM. No system. Just chaos that looks organised until it isn't.</p>
 
-<p>I built an automation stack that fixes this. No custom code. No expensive software. Just WhatsApp Business API, n8n, Google Sheets, and OpenClaw wired together properly.</p>
+<p>I built an automation stack that fixes this — <strong>no custom code, no expensive software</strong>. Just four tools wired together correctly.</p>
 
-<p>Here's exactly how it works.</p>
+<div class="callout insight">
+  <div class="callout-icon">💡</div>
+  <div class="callout-body">
+    <strong>The Stack</strong>
+    WhatsApp Business API → n8n → Google Sheets → OpenClaw. Each tool does one thing well. Together they replace a full-time follow-up person.
+  </div>
+</div>
 
 <h2>The Stack</h2>
 
-<p><strong>WhatsApp Business API</strong> — The entry point. Every customer message comes through here via Meta's official API. This gives you structured webhooks, template message sending, and read receipts. Not the WhatsApp Business app — the actual API. There's a difference, and it matters.</p>
-
-<p><strong>n8n</strong> — The brain. Self-hosted workflow automation. Every trigger, every conditional, every data transformation runs here. I run it on a RM35/month VPS. It handles hundreds of workflows without breaking a sweat.</p>
-
-<p><strong>Google Sheets</strong> — The database. Not because it's ideal, but because F&amp;B staff actually use it. Every team member knows how to open a spreadsheet. No onboarding required.</p>
-
-<p><strong>OpenClaw</strong> — The AI layer. Handles intelligent follow-up messages, categorises customer intent, and drafts responses that actually sound human.</p>
+<div class="stack-item">
+  <span class="stack-label">WhatsApp Business API</span>
+  <span class="stack-desc">The entry point. Every customer message arrives as a structured webhook. Not the WhatsApp Business app — the actual API. There's a difference, and it matters.</span>
+</div>
+<div class="stack-item">
+  <span class="stack-label">n8n (self-hosted)</span>
+  <span class="stack-desc">The brain. Every trigger, conditional, and transformation runs here. I run it on a <span class="highlight">RM35/month VPS</span>. Handles hundreds of workflows without breaking a sweat.</span>
+</div>
+<div class="stack-item">
+  <span class="stack-label">Google Sheets</span>
+  <span class="stack-desc">The database. Not because it's ideal — because F&amp;B staff already use it. No onboarding required. Every team member knows how to open a spreadsheet.</span>
+</div>
+<div class="stack-item">
+  <span class="stack-label">OpenClaw</span>
+  <span class="stack-desc">The AI layer. Classifies customer intent, handles intelligent follow-ups, and drafts responses that sound human — not like a bot.</span>
+</div>
 
 <h2>The Workflow</h2>
 
-<p>A new customer sends a WhatsApp message. Here's what happens in the next 30 seconds without anyone touching a keyboard:</p>
+<p>A new customer sends a WhatsApp message. Here's what happens in the next 30 seconds — with no one touching a keyboard:</p>
 
-<p><strong>Step 1 — Webhook Trigger.</strong> n8n has a Webhook node listening for incoming WhatsApp messages from the Meta API. The moment a message arrives, the workflow fires.</p>
-
-<p><strong>Step 2 — Intent Classification.</strong> An OpenClaw agent reads the message and categorises it: new customer inquiry, returning customer, complaint, or general question. This classification drives every downstream action.</p>
-
-<p><strong>Step 3 — Google Sheets Write.</strong> An n8n Google Sheets node appends a new row with the customer's phone number, name (if provided), message content, timestamp, category, and assigned status. The sheet becomes the live CRM dashboard.</p>
-
-<p><strong>Step 4 — Onboarding Flow Trigger.</strong> If classified as "new customer inquiry," n8n triggers a WhatsApp template message via the Send Message node. The template is pre-approved by Meta — something like: "Hi [Name], thanks for reaching out to [Restaurant]. Here's what we offer and how to book..." — personalised with data pulled from the Sheet.</p>
-
-<p><strong>Step 5 — Follow-Up Scheduling.</strong> A Wait node in n8n holds the workflow for 3 days. If the customer hasn't responded or converted (tracked via a status column in the Sheet), n8n sends a second WhatsApp template: a gentle nudge with a specific offer or reminder.</p>
-
-<p><strong>Step 6 — Escalation.</strong> If still no conversion after the follow-up, the workflow flags the row in red on the Sheet and sends an internal WhatsApp notification to the owner. Human eyes only come in when automation has already done the heavy lifting.</p>
-
-<p>The entire flow — from first message to structured follow-up — runs without anyone on the F&amp;B team doing anything.</p>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <p class="step-title">Webhook Trigger</p>
+    <p class="step-desc">n8n listens for incoming WhatsApp messages from the Meta API. The moment a message arrives, the workflow fires.</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <p class="step-title">Intent Classification</p>
+    <p class="step-desc">An OpenClaw agent reads the message and categorises it: new inquiry, returning customer, complaint, or general question. This classification drives every downstream action.</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <p class="step-title">Google Sheets Write</p>
+    <p class="step-desc">Customer phone, name, message, timestamp, category, and status are appended to the sheet. It becomes a live CRM dashboard your team can read on mobile.</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <p class="step-title">Automated Onboarding Message</p>
+    <p class="step-desc">If classified as "new inquiry," n8n sends a Meta-approved WhatsApp template — personalised with the customer's name and your restaurant's details — within seconds.</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body">
+    <p class="step-title">Follow-Up Scheduling</p>
+    <p class="step-desc">A Wait node holds for 3 days. If the customer hasn't converted, n8n sends a second WhatsApp template — a gentle nudge with a specific offer.</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-body">
+    <p class="step-title">Escalation to Human</p>
+    <p class="step-desc">Still no conversion? The row is flagged in the Sheet and the owner gets an internal WhatsApp alert. Human attention only arrives after automation has done everything it can.</p>
+  </div>
+</div>
 
 <h2>Why This Beats a CRM</h2>
 
-<p>I've tried recommending proper CRMs to F&amp;B clients. HubSpot, Zoho, Freshsales. Every time, the same result: the team uses it for two weeks, then goes back to WhatsApp because "it's easier."</p>
+<p>I've recommended proper CRMs to F&amp;B clients. HubSpot, Zoho, Freshsales. Every time: the team uses it for two weeks, then goes back to WhatsApp because it's easier. The problem isn't discipline — CRMs are built for salespeople at desks, not staff on their feet in kitchens.</p>
 
-<p>The problem isn't discipline. The problem is that CRMs are built for sales teams who sit at desks. F&amp;B staff are on their feet, serving tables, managing kitchens. A CRM that requires desktop login is a CRM that won't get used.</p>
-
-<p>This stack beats a CRM for three reasons:</p>
-
-<p><strong>Speed.</strong> WhatsApp Business API has a 98% open rate. Your follow-up messages get read. Email open rates for the same demographic hover around 20%. The channel matters.</p>
-
-<p><strong>Cost.</strong> n8n self-hosted: RM35/month VPS. Google Sheets: free. WhatsApp Business API: per-conversation pricing, typically under RM0.30 per conversation window. Total monthly cost for a restaurant handling 200 new inquiries: under RM100. A mid-tier CRM seat costs more than that per user.</p>
-
-<p><strong>Familiarity.</strong> Your team already lives in WhatsApp. Your customers already live in WhatsApp. The friction of switching channels is zero. And Google Sheets means your manager can pull a report on mobile without training.</p>
+<ul>
+  <li><strong>Speed.</strong> WhatsApp Business API has a 98% open rate. Your follow-up messages get read. Email open rates for the same demographic hover around 20%.</li>
+  <li><strong>Cost.</strong> n8n self-hosted: RM35/month. Google Sheets: free. WhatsApp API: under RM0.30 per conversation. Total for a restaurant handling 200 inquiries: under RM100/month.</li>
+  <li><strong>Familiarity.</strong> Your team already lives in WhatsApp. Your customers already live in WhatsApp. Friction: zero.</li>
+</ul>
 
 <h2>What This Actually Delivers</h2>
 
-<p>For one F&amp;B client running a mid-size restaurant chain in KL, this system handled 340 new customer inquiries in the first month. 23% converted within the 3-day follow-up window — customers who would have been lost in the old manual process. Owner's time spent on customer follow-up went from ~2 hours/day to 15 minutes of reviewing the escalation list.</p>
+<div class="stat-row">
+  <div class="stat-item">
+    <span class="stat-value">340</span>
+    <span class="stat-label">Inquiries handled, Month 1</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">23%</span>
+    <span class="stat-label">Conversion within 3 days</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">RM100</span>
+    <span class="stat-label">Total monthly cost</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">15min</span>
+    <span class="stat-label">Owner time/day (was 2hrs)</span>
+  </div>
+</div>
 
-<p>That's what F&amp;B automation Malaysia actually looks like in practice. Not AI magic. Just the right tools wired together correctly.</p>
+<div class="callout result">
+  <div class="callout-icon">📊</div>
+  <div class="callout-body">
+    <strong>Real Result</strong>
+    One KL restaurant chain, first month: 340 new customer inquiries, 23% converted within the 3-day follow-up window. These were customers who would have been lost in the old manual process.
+  </div>
+</div>
 
 <h2>Building This for Your Business</h2>
 
-<p>The core workflow takes about 4-6 hours to build properly from scratch — assuming you already have WhatsApp Business API access approved by Meta (that part takes 1-3 days). The Google Sheets schema and n8n WhatsApp webhook patterns I've refined across multiple clients, so I'm not starting from zero.</p>
+<p>The core workflow takes 4–6 hours to build from scratch — assuming you already have WhatsApp Business API access from Meta (that part takes 1–3 days to approve). The Sheets schema and n8n webhook patterns I've refined across multiple clients, so I'm not starting from zero.</p>
 
-<p>If you want this running in your business, I work with 2-3 F&amp;B clients a month. That's intentional — quality over volume.</p>
+<blockquote>
+  <p>I work with 2–3 F&amp;B clients a month. That's intentional. Quality over volume — I don't take on more than I can do properly.</p>
+</blockquote>
 
-<p>→ <a href="mailto:jewel@w3j.dev">Book a call</a></p>
 <div class="cta-box">
-  <p>Need this built for your F&amp;B business? I take 2-3 clients a month.</p>
-  <p><a href="mailto:jewel@w3j.dev">Book a call</a></p>
+  <h3>Want this running in your business?</h3>
+  <p>Free 30-min call. I'll tell you exactly whether this fits your setup before we do anything.</p>
+  <a href="https://koalendar.com/e/meet-with-w3j-llc" class="btn" target="_blank" rel="noopener">Book a call →</a>
 </div>
-          </div>
+                    </div>
         </article>
       <div class="post-author">
         <div class="post-author-avatar">B</div>
