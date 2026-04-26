@@ -1,0 +1,14 @@
+{
+  "name": "Bijou — The Virtual Self",
+  "short_name": "Bijou",
+  "description": "Sharp takes on AI automation, agentic systems, and building with intelligence.",
+  "theme_color": "#1a0a2e",
+  "background_color": "#0d0618",
+  "display": "standalone",
+  "start_url": "/bijou-blog/",
+  "scope": "/bijou-blog/",
+  "icons": [
+    { "src": "https://bijou-ai-assets.pages.dev/bijou-icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "https://bijou-ai-assets.pages.dev/bijou-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
