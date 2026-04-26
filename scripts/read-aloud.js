@@ -29,15 +29,13 @@
   }
 
   function setButtonState(btn, playing, loading) {
+    if (!btn) return;
     if (loading) {
-      btn.innerHTML = '⏳ Loading…';
-      btn.style.background = 'linear-gradient(90deg, #4c1d95, #5b21b6)';
+      btn.textContent = '⏳ Loading…';
     } else if (playing) {
-      btn.innerHTML = '⏹ Stop';
-      btn.style.background = 'linear-gradient(90deg, #6d28d9, #7c3aed)';
+      btn.textContent = '⏹ Stop';
     } else {
-      btn.innerHTML = '🔊 Read Aloud';
-      btn.style.background = 'linear-gradient(90deg, #8b5cf6, #a855f7)';
+      btn.textContent = '🔊 Listen';
     }
   }
 
@@ -152,50 +150,17 @@
     }
   }
 
-  /* ── DOM injection ───────────────────────────────────────── */
+  /* ── Attach handler to existing #bijou-read-aloud button ── */
 
-  function injectButton() {
-    if (!document.querySelector('.post-body')) return;
-    if (document.getElementById('bijou-read-aloud')) return;
-
-    const btn = document.createElement('button');
-    btn.id = 'bijou-read-aloud';
-    btn.setAttribute('aria-label', 'Read this post aloud');
-    btn.innerHTML = '🔊 Read Aloud';
-
-    Object.assign(btn.style, {
-      position:     'fixed',
-      bottom:       '1.5rem',
-      right:        '1.5rem',
-      zIndex:       '9000',
-      background:   'linear-gradient(90deg, #8b5cf6, #a855f7)',
-      color:        '#fff',
-      border:       'none',
-      borderRadius: '999px',
-      padding:      '0.7rem 1.25rem',
-      fontFamily:   'Inter, system-ui, sans-serif',
-      fontSize:     '0.88rem',
-      fontWeight:   '700',
-      cursor:       'pointer',
-      boxShadow:    '0 4px 24px rgba(139,92,246,0.45)',
-      transition:   'transform 0.18s ease, background 0.18s ease',
-      display:      'flex',
-      alignItems:   'center',
-      gap:          '0.4rem',
-      lineHeight:   '1',
-      whiteSpace:   'nowrap',
-    });
-
-    btn.addEventListener('mouseenter', () => { if (!isPlaying) btn.style.transform = 'translateY(-2px)'; });
-    btn.addEventListener('mouseleave', () => { btn.style.transform = 'translateY(0)'; });
+  function attachHandler() {
+    const btn = document.getElementById('bijou-read-aloud');
+    if (!btn) return;
     btn.addEventListener('click', handleClick);
-
-    document.body.appendChild(btn);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectButton);
+    document.addEventListener('DOMContentLoaded', attachHandler);
   } else {
-    injectButton();
+    attachHandler();
   }
 })();
