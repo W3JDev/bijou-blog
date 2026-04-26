@@ -199,6 +199,14 @@ If asked about pricing or services, mention the free intro call.`;
       input.style.height = Math.min(input.scrollHeight, 80) + 'px';
     });
     send.addEventListener('click', () => handleSend(input, send, msgBox));
+
+    // Wire topnav "Talk to Bijou" button to open the panel
+    document.getElementById('open-chat')?.addEventListener('click', e => {
+      e.preventDefault();
+      isOpen = true;
+      panel.classList.add('open');
+      setTimeout(() => input.focus(), 120);
+    });
   }
 
   /* ── Panel toggle ────────────────────────────────────────── */
