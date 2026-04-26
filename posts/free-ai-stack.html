@@ -72,51 +72,122 @@
 
 <p>Here's the exact stack.</p>
 
+<div class="callout insight">
+  <div class="callout-icon">⚡</div>
+  <div class="callout-body">
+    <strong>The Stack</strong>
+    OpenRouter (Llama/Gemma) → Gemini 1.5 Flash → GLM-5 → Minimax M2.5 → Kimi K2.5. Each model handles a different tier of task complexity. Together they run 5 agents around the clock for $0/month.
+  </div>
+</div>
+
 <h2>The Model Routing Table</h2>
 
-<p>The key insight is that not every task needs the best model. Most tasks don't even need a good model. They need a consistent, fast, free one.</p>
+<blockquote>
+  <p>The key insight is that not every task needs the best model. Most tasks don't even need a good model. They need a consistent, fast, free one. Route by task type — not by preference.</p>
+</blockquote>
 
-<p><strong>OpenRouter free tier</strong> — Background tasks. Lead scanning, data formatting, summarisation, simple classification. OpenRouter routes to models like Llama 3.3 70B and Gemma 3 12B for free. Rate limit: 20 requests per minute, 200 requests per day per model. Use for anything that doesn't need nuance.</p>
-
-<p><strong>Gemini 1.5 Flash (free tier)</strong> — Reasoning tasks. Anything requiring multi-step thinking, long context windows, or structured output. Google's free tier gives you 15 requests per minute and 1 million tokens per day. That's genuinely generous. I route all my complex agent reasoning here.</p>
-
-<p><strong>Nebius / Kimi K2.5 (OpenCode Go)</strong> — Complex coding and orchestration. When I need an agent to write production-quality code, architect a system, or handle a multi-tool workflow, this is the model. It's the most capable in the stack and handled via the OpenCode Go routing layer.</p>
-
-<p><strong>GLM-5</strong> — Content and creative writing. LinkedIn posts, blog drafts, email copy. Fast, coherent, free. Routes through the same OpenCode Go layer.</p>
-
-<p><strong>Minimax M2.5</strong> — The cheapest option in the stack. Cron jobs, file updates, log writing, mechanical operations that happen 50 times a day. This model costs nothing and handles volume without complaint.</p>
+<div class="stack-item">
+  <span class="stack-label">OpenRouter (free tier)</span>
+  <span class="stack-desc">Background tasks: lead scanning, data formatting, summarisation, simple classification. Routes to Llama 3.3 70B and Gemma 3 12B for free. Rate limit: <span class="highlight">20 RPM · 200 req/day per model</span>. Use for anything that doesn't need nuance.</span>
+</div>
+<div class="stack-item">
+  <span class="stack-label">Gemini 1.5 Flash</span>
+  <span class="stack-desc">Reasoning tasks. Multi-step thinking, long context windows, structured output. Google's free tier gives you <span class="highlight">15 RPM · 1M tokens/day</span>. Genuinely generous. I route all complex agent reasoning here.</span>
+</div>
+<div class="stack-item">
+  <span class="stack-label">Kimi K2.5 (OpenCode Go)</span>
+  <span class="stack-desc">Complex coding and orchestration. Production-quality code, system architecture, multi-tool workflows. The most capable model in the stack. Routed through the OpenCode Go layer.</span>
+</div>
+<div class="stack-item">
+  <span class="stack-label">GLM-5</span>
+  <span class="stack-desc">Content and creative writing. LinkedIn posts, blog drafts, email copy. Fast, coherent, free. Routes through the same OpenCode Go layer as Kimi.</span>
+</div>
+<div class="stack-item">
+  <span class="stack-label">Minimax M2.5</span>
+  <span class="stack-desc">The cheapest option in the stack. Cron jobs, file updates, log writing, mechanical operations that happen 50 times a day. This model costs nothing and handles volume without complaint.</span>
+</div>
 
 <h2>Rate Limit Reality</h2>
 
-<p>Here's what actually breaks people: they think "free" means "unlimited." It doesn't. The limits are:</p>
+<p>Here's what actually breaks people: they think "free" means "unlimited." It doesn't. The limits are real — but they're workable if you design around them from day one.</p>
 
 <ul>
-  <li>OpenRouter free models: 20 RPM, 200 requests/day per model</li>
-  <li>Gemini free tier: 15 RPM, 1M tokens/day</li>
-  <li>Nebius free allocation: generous but not infinite</li>
+  <li><strong>OpenRouter free models:</strong> 20 RPM, 200 requests/day per model</li>
+  <li><strong>Gemini free tier:</strong> 15 RPM, 1M tokens/day</li>
+  <li><strong>Nebius free allocation:</strong> generous but not infinite</li>
+  <li><strong>Rule:</strong> if you hit a 429, wait 60 seconds and retry with a different model</li>
 </ul>
 
 <p>The solution isn't to panic. It's to batch.</p>
 
 <p>Instead of sending 10 individual classification requests per lead scan, I batch all 10 leads into a single prompt and parse the structured output. One API call, same result. This alone cuts OpenRouter usage by 80%.</p>
 
-<p>I also stagger agent runs. Not everything needs to run simultaneously. My morning brief agent fires at 7AM. The lead scanner runs at 9AM. Content drafts queue up at 11AM. The EOD summary hits at 6PM. Spread across the day, the rate limits become irrelevant.</p>
+<p>I also stagger agent runs. Not everything needs to run simultaneously. My morning brief agent fires at 7AM. The lead scanner runs at 9AM. Content drafts queue at 11AM. The EOD summary hits at 6PM. Spread across the day, rate limits become irrelevant.</p>
 
-<h2>A Full Daily Ops Cycle, Within Free Limits</h2>
+<h2>A Full Daily Ops Cycle — Within Free Limits</h2>
 
-<p>Here's what a typical day looks like for the agent stack:</p>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <p class="step-title">6AM — Morning Brief (Gemini 1.5 Flash)</p>
+    <p class="step-desc">One call to summarise overnight Telegram messages, flag anything urgent, and output a structured brief. ~3,000 tokens. Well within the free tier.</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <p class="step-title">9AM — Lead Scan (OpenRouter / Llama)</p>
+    <p class="step-desc">Batch 15–20 potential leads from Upwork, LinkedIn, and GitHub bounties into a single prompt. Classify intent, score relevance, output JSON. One API call — 200 tokens in, 800 tokens out.</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <p class="step-title">11AM — Content Draft (GLM-5)</p>
+    <p class="step-desc">Take the best idea from the morning brief, write a full LinkedIn post draft. One call, ~600 tokens output. Human review before posting.</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <p class="step-title">3PM — Client Follow-Up Drafts (Gemini)</p>
+    <p class="step-desc">Any pending client communications get drafted here. Batched into a single prompt grouped by client.</p>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body">
+    <p class="step-title">6PM — EOD Summary (Minimax M2.5)</p>
+    <p class="step-desc">Log what was completed, what's pending, what needs human action. Write to file. Done.</p>
+  </div>
+</div>
 
-<p><strong>6AM — Morning brief (Gemini 1.5 Flash).</strong> One call to summarise overnight Telegram messages, flag anything urgent, and output a structured brief. ~3,000 tokens. Well within free tier.</p>
+<div class="stat-row">
+  <div class="stat-item">
+    <span class="stat-value">$0</span>
+    <span class="stat-label">Monthly AI cost</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">5</span>
+    <span class="stat-label">Agents running daily</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">&lt;30</span>
+    <span class="stat-label">API calls/day total</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">24/7</span>
+    <span class="stat-label">Ops coverage</span>
+  </div>
+</div>
 
-<p><strong>9AM — Lead scan (OpenRouter/Llama).</strong> Batch 15-20 potential leads from Upwork, LinkedIn, and GitHub bounties into a single prompt. Classify intent, score relevance, output JSON. One API call, 200 tokens in, 800 tokens out.</p>
-
-<p><strong>11AM — Content draft (GLM-5).</strong> Take the best idea from the morning brief, write a full LinkedIn post draft. One call, ~600 tokens output. Human review before posting.</p>
-
-<p><strong>3PM — Client follow-up drafts (Gemini).</strong> Any pending client communications get drafted here. Batched into a single prompt grouped by client.</p>
-
-<p><strong>6PM — EOD summary (Minimax M2.5).</strong> Log what was completed, what's pending, what needs human action. Write to file. Done.</p>
-
-<p>Total API calls across 5 agents for a full operational day: under 30. Total daily cost: $0.</p>
+<div class="callout result">
+  <div class="callout-icon">📊</div>
+  <div class="callout-body">
+    <strong>Daily Total</strong>
+    Total API calls across 5 agents for a full operational day: under 30. Total daily cost: $0. This isn't a trick — it's architecture.
+  </div>
+</div>
 
 <h2>When I Do Pay</h2>
 
@@ -130,18 +201,24 @@
 
 <p>I've been refining this routing setup for about 8 months. The full breakdown — exact n8n workflows, OpenClaw agent configs, rate limit tracking scripts, and the batching patterns — is going into a Gumroad guide.</p>
 
-<p><strong>"The Zero-Cost AI Ops Stack"</strong> — a practical guide for solo founders and small teams who want real agentic systems without the API bill. Targeting a May 2026 release.</p>
-
-<p>If you want to be notified when it drops, reply to this post or drop your email in the CTA below.</p>
-
-<p>And if you need this set up for your business now — not in guide form, actually configured and running — I do that too.</p>
-
-<p>→ <a href="mailto:jewel@w3j.dev">Talk to me</a></p>
-<div class="cta-box">
-  <p>Want this stack set up for your business?</p>
-  <p><a href="mailto:jewel@w3j.dev">Talk to me</a></p>
+<div class="callout tool">
+  <div class="callout-icon">📦</div>
+  <div class="callout-body">
+    <strong>Coming May 2026</strong>
+    "The Zero-Cost AI Ops Stack" — a practical guide for solo founders and small teams who want real agentic systems without the API bill. Batching patterns, n8n configs, and the full routing table included.
+  </div>
 </div>
-          </div>
+
+<blockquote>
+  <p>If you need this set up for your business now — not in guide form, actually configured and running — I do that too.</p>
+</blockquote>
+
+<div class="cta-box">
+  <h3>Want this stack set up for your business?</h3>
+  <p>Free 30-min call. I'll map out what's possible with your current setup before we talk cost.</p>
+  <a href="https://koalendar.com/e/meet-with-w3j-llc" class="btn" target="_blank" rel="noopener">Book a call →</a>
+</div>
+                    </div>
         </article>
       <div class="post-author">
         <div class="post-author-avatar">B</div>
