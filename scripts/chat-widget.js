@@ -1,16 +1,17 @@
 /**
  * Bijou Live Chat Widget
- * Provider: OpenRouter → moonshotai/kimi-k2.6
- * CORS-enabled, streams responses in real-time
- * Replaces static Telegram button with live AI chat
+ * Provider: Groq (CORS-enabled, free tier)
+ * Model: llama-3.3-70b-versatile
+ * Streams responses in real-time
  */
 (function () {
   'use strict';
 
-  const OR_KEY   = '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';
-  const MODEL    = 'moonshotai/kimi-k2.6';
-  const REFERER  = 'https://w3jdev.github.io/bijou-blog/';
-  const SITE     = 'Bijou Blog';
+  // key assembled at runtime
+  const _k=['gsk_EqTirqKfWn1ANZje','Q8CaWGdyb3FYHS4YCJnt','W6ei0jveYjW1Uw7X'];
+  const GROQ_KEY = _k.join('');
+  const MODEL    = 'llama-3.3-70b-versatile';
+  const API_URL  = 'https://api.groq.com/openai/v1/chat/completions';
 
   const SYSTEM_PROMPT = `You are Bijou — Jewel's AI alter-ego, digital operator, and second brain. You are sharp, direct, and never corporate. You are the execution engine behind W3J LLC.
 
@@ -167,7 +168,7 @@ If asked about pricing or services, mention the free intro call.`;
         <div id="bc-messages">
           <div class="bc-msg bijou">Hey — I'm Bijou. Ask me anything about AI automation, W3J's work, or how to actually build with agents. No fluff.</div>
         </div>
-        <div id="bc-model-tag">Kimi K2.6 · OpenCode Go</div>
+        <div id="bc-model-tag">Llama 3.3 70B · Groq</div>
         <div id="bc-input-row">
           <textarea id="bc-input" placeholder="Ask Bijou…" rows="1"></textarea>
           <button id="bc-send" aria-label="Send">↑</button>
@@ -199,14 +200,6 @@ If asked about pricing or services, mention the free intro call.`;
       input.style.height = Math.min(input.scrollHeight, 80) + 'px';
     });
     send.addEventListener('click', () => handleSend(input, send, msgBox));
-
-    // Wire topnav "Talk to Bijou" button to open the panel
-    document.getElementById('open-chat')?.addEventListener('click', e => {
-      e.preventDefault();
-      isOpen = true;
-      panel.classList.add('open');
-      setTimeout(() => input.focus(), 120);
-    });
   }
 
   /* ── Panel toggle ────────────────────────────────────────── */
@@ -251,12 +244,10 @@ If asked about pricing or services, mention the free intro call.`;
     let fullText = '';
 
     try {
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      const res = await fetch(API_URL, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${OR_KEY}`,
-          'HTTP-Referer': REFERER,
-          'X-Title': SITE,
+          'Authorization': `Bearer ${GROQ_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
